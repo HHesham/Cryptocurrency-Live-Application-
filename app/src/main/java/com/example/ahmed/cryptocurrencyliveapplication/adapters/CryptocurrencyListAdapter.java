@@ -16,6 +16,7 @@ import com.example.ahmed.cryptocurrencyliveapplication.R;
 import com.example.ahmed.cryptocurrencyliveapplication.interfaces.OnCurrenciesListListener;
 import com.example.ahmed.cryptocurrencyliveapplication.model.Cryptocurrency;
 
+import java.util.Hashtable;
 import java.util.List;
 
 public class CryptocurrencyListAdapter extends RecyclerView.Adapter<CryptocurrencyListAdapter.ViewHolder> {
@@ -24,6 +25,24 @@ public class CryptocurrencyListAdapter extends RecyclerView.Adapter<Cryptocurren
     private Activity mActivity;
     private final List<Cryptocurrency> mValues;
     private OnCurrenciesListListener mListener;
+    private boolean isSelectionMode;
+    private Hashtable<Integer, Cryptocurrency> hashtable = new Hashtable<>();
+
+    public Hashtable<Integer, Cryptocurrency> getHashtable() {
+        return hashtable;
+    }
+
+    public void setHashtable(Hashtable<Integer, Cryptocurrency> hashtable) {
+        this.hashtable = hashtable;
+    }
+
+    public boolean isSelectionMode() {
+        return isSelectionMode;
+    }
+
+    public void setSelectionMode(boolean selectionMode) {
+        isSelectionMode = selectionMode;
+    }
 
     public CryptocurrencyListAdapter(List<Cryptocurrency> items, String TAG, Activity activity, OnCurrenciesListListener listener) {
         mValues = items;
@@ -39,14 +58,55 @@ public class CryptocurrencyListAdapter extends RecyclerView.Adapter<Cryptocurren
         return new ViewHolder(view);
     }
 
+    private void selectItem(Cryptocurrency cryptocurrency, View view){
+        ImageView checkImg = (ImageView)(view.findViewById(R.id.selection_box));
+        if(hashtable.containsKey(cryptocurrency.getId())){
+            hashtable.remove(cryptocurrency.getId());
+            checkImg.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_check_box_outline_blank_black_24dp));
+        }else {
+            hashtable.put(cryptocurrency.getId(),cryptocurrency);
+            checkImg.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_check_box_black_24dp));
+        }
+    }
+
+    public void removeSelectionMode(){
+        isSelectionMode=false;
+        hashtable.clear();
+        notifyDataSetChanged();
+    }
+
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.mItem = mValues.get(position);
         holder.mCurrencyText.setText(mValues.get(position).getName());
+        if(isSelectionMode){
+            holder.mCheckImage.setVisibility(View.VISIBLE);
+        }else {
+            holder.mCheckImage.setVisibility(View.GONE);
+        }
+        if(hashtable.containsKey(holder.mItem.getId())){
+            holder.mCheckImage.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_check_box_black_24dp));
+        }else {
+            holder.mCheckImage.setImageDrawable(mActivity.getResources().getDrawable(R.drawable.ic_check_box_outline_blank_black_24dp));
+        }
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onItemClicked(mValues.get(position));
+                if(isSelectionMode){
+                    selectItem(mValues.get(position), holder.mView);
+                }else {
+                    mListener.onItemClicked(mValues.get(position));
+                }
+            }
+        });
+        holder.mView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                isSelectionMode=true;
+                mListener.onLongPress();
+                selectItem(mValues.get(position),v);
+                notifyDataSetChanged();
+                return true;
             }
         });
     }

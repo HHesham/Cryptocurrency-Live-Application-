@@ -133,7 +133,6 @@ public class CalculatorFragment extends MyFragment implements View.OnClickListen
         android.support.v7.app.ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.mipmap.ic_back);
         actionBar.show();
     }
 

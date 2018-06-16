@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ import com.example.ahmed.cryptocurrencyliveapplication.utilities.Helper;
 import com.example.ahmed.cryptocurrencyliveapplication.views.activities.MainActivity;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
 /**
@@ -52,7 +54,10 @@ public class CryptocurrenciesListFragment extends MyFragment implements OnCrypto
     private static final String TAG = CryptocurrenciesListFragment.class.getSimpleName();
     private int start = 0;
     private ProgressDialog mDialog;
-    private boolean isSelectionMode = false;
+
+    public CryptocurrencyListAdapter getAdapter(){
+        return mCryptocurrencyListAdapter;
+    }
 
     public CryptocurrenciesListFragment() {
     }
@@ -133,28 +138,28 @@ public class CryptocurrenciesListFragment extends MyFragment implements OnCrypto
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.my_toolbar);
         TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
         mTitle.setText(R.string.cryptocurrency_title);
+        setActionBar(false);
+    }
+
+    private void setActionBar(boolean visiableBack){
         android.support.v7.app.ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(visiableBack);
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+    public void onLongPress(){
+        setActionBar(true);
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
+    public void onBackPressed(){
+        setActionBar(false);
+        mCryptocurrencyListAdapter.removeSelectionMode();
     }
 
     @Override
     public void onItemClicked(Cryptocurrency cryptocurrency){
-        if(isSelectionMode){
-
-        }else {
-            ((MainActivity) getActivity()).openCalculator(cryptocurrency);
-        }
+        ((MainActivity) getActivity()).openCalculator(cryptocurrency);
     }
 
     @Override
