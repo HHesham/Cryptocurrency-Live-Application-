@@ -1,14 +1,11 @@
 package com.example.ahmed.cryptocurrencyliveapplication.controllers;
 
 import android.content.Context;
-import android.widget.Toast;
 
-import com.android.volley.VolleyError;
-import com.example.ahmed.cryptocurrencyliveapplication.interfaces.onCryptocurriencesResponse;
+import com.example.ahmed.cryptocurrencyliveapplication.interfaces.OnCryptocurriencesResponse;
 import com.example.ahmed.cryptocurrencyliveapplication.managers.VolleyManager;
 import com.example.ahmed.cryptocurrencyliveapplication.model.Cryptocurrency;
 import com.example.ahmed.cryptocurrencyliveapplication.model.DataResponse;
-import com.example.ahmed.cryptocurrencyliveapplication.utilities.Constants;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -18,10 +15,10 @@ public class CryptocurrenciesListController {
 
     private Context mContext;
     private String mTag;
-    private onCryptocurriencesResponse mListener;
+    private OnCryptocurriencesResponse mListener;
 
 
-    public CryptocurrenciesListController(String tag, Context context,onCryptocurriencesResponse listener){
+    public CryptocurrenciesListController(String tag, Context context,OnCryptocurriencesResponse listener){
         mContext=context;
         mTag=tag;
         mListener=listener;

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ahmed.cryptocurrencyliveapplication.R;
+import com.example.ahmed.cryptocurrencyliveapplication.interfaces.OnCurrenciesListListener;
 import com.example.ahmed.cryptocurrencyliveapplication.model.Cryptocurrency;
 
 import java.util.List;
@@ -22,9 +23,11 @@ public class CryptocurrencyListAdapter extends RecyclerView.Adapter<Cryptocurren
     private String TAG;
     private Activity mActivity;
     private final List<Cryptocurrency> mValues;
+    private OnCurrenciesListListener mListener;
 
-    public CryptocurrencyListAdapter(List<Cryptocurrency> items, String TAG, Activity activity) {
+    public CryptocurrencyListAdapter(List<Cryptocurrency> items, String TAG, Activity activity, OnCurrenciesListListener listener) {
         mValues = items;
+        mListener=listener;
         this.TAG = TAG;
         this.mActivity = activity;
     }
@@ -37,13 +40,13 @@ public class CryptocurrencyListAdapter extends RecyclerView.Adapter<Cryptocurren
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.mItem = mValues.get(position);
         holder.mCurrencyText.setText(mValues.get(position).getName());
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                mListener.onItemClicked(mValues.get(position));
             }
         });
     }

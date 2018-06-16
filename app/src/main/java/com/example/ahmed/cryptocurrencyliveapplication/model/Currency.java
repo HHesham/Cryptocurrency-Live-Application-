@@ -1,6 +1,9 @@
 package com.example.ahmed.cryptocurrencyliveapplication.model;
 
-public class Currency {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Currency implements Parcelable{
 
     /*
                     "price": 0.777915,
@@ -16,6 +19,7 @@ public class Currency {
     private double market_cap;
     private double percent_change_1h;
     private double percent_change_24h;
+    private double percent_change_7d;
 
     public Currency(){
 
@@ -69,7 +73,41 @@ public class Currency {
         this.percent_change_7d = percent_change_7d;
     }
 
-    private double percent_change_7d;
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeDouble(this.price);
+        dest.writeDouble(this.volume_24h);
+        dest.writeDouble(this.market_cap);
+        dest.writeDouble(this.percent_change_1h);
+        dest.writeDouble(this.percent_change_24h);
+        dest.writeDouble(this.percent_change_7d);
+    }
+
+    protected Currency(Parcel in) {
+        this.price = in.readDouble();
+        this.volume_24h = in.readDouble();
+        this.market_cap = in.readDouble();
+        this.percent_change_1h = in.readDouble();
+        this.percent_change_24h = in.readDouble();
+        this.percent_change_7d = in.readDouble();
+    }
+
+    public static final Creator<Currency> CREATOR = new Creator<Currency>() {
+        @Override
+        public Currency createFromParcel(Parcel source) {
+            return new Currency(source);
+        }
+
+        @Override
+        public Currency[] newArray(int size) {
+            return new Currency[size];
+        }
+    };
 }

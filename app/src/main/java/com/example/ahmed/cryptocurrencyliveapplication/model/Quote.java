@@ -1,6 +1,9 @@
 package com.example.ahmed.cryptocurrencyliveapplication.model;
 
-public class Quote {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Quote implements Parcelable{
     /*
     "quotes": {
                 "USD": {
@@ -26,4 +29,30 @@ public class Quote {
     public void setUSD(Currency USD) {
         this.USD = USD;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(this.USD, flags);
+    }
+
+    protected Quote(Parcel in) {
+        this.USD = in.readParcelable(Currency.class.getClassLoader());
+    }
+
+    public static final Creator<Quote> CREATOR = new Creator<Quote>() {
+        @Override
+        public Quote createFromParcel(Parcel source) {
+            return new Quote(source);
+        }
+
+        @Override
+        public Quote[] newArray(int size) {
+            return new Quote[size];
+        }
+    };
 }

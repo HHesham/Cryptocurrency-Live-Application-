@@ -1,18 +1,12 @@
 package com.example.ahmed.cryptocurrencyliveapplication.managers;
 
-import android.app.Activity;
 import android.content.Context;
-import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.example.ahmed.cryptocurrencyliveapplication.interfaces.onCryptocurriencesResponse;
+import com.example.ahmed.cryptocurrencyliveapplication.interfaces.OnCryptocurriencesResponse;
 import com.example.ahmed.cryptocurrencyliveapplication.model.DataResponse;
 import com.example.ahmed.cryptocurrencyliveapplication.utilities.Constants;
-import com.example.ahmed.cryptocurrencyliveapplication.utilities.Helper;
-import com.example.ahmed.cryptocurrencyliveapplication.views.fragments.CryptocurrenciesListFragment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,7 +30,7 @@ public class VolleyManager {
      * https://api.coinmarketcap.com/v2/ticker/?start=101&limit=10&sort=id&structure=array
      */
     public void getCurrenciesList(int start, int limit, String sort, String structure, Context context, String TAG,
-                                  final onCryptocurriencesResponse mListener){
+                                  final OnCryptocurriencesResponse mListener){
         String url = Constants.GET_CURRENCIES_URL;
         Map<String, String> headers = new HashMap<String, String>();
         Map<String, String> params = new HashMap<String, String>();

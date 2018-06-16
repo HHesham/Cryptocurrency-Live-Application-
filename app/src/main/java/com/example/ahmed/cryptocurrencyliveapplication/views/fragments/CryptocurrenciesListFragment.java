@@ -3,7 +3,9 @@ package com.example.ahmed.cryptocurrencyliveapplication.views.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -17,10 +19,12 @@ import com.android.volley.VolleyError;
 import com.example.ahmed.cryptocurrencyliveapplication.R;
 import com.example.ahmed.cryptocurrencyliveapplication.adapters.CryptocurrencyListAdapter;
 import com.example.ahmed.cryptocurrencyliveapplication.controllers.CryptocurrenciesListController;
-import com.example.ahmed.cryptocurrencyliveapplication.interfaces.onCryptocurriencesResponse;
+import com.example.ahmed.cryptocurrencyliveapplication.interfaces.OnCryptocurriencesResponse;
+import com.example.ahmed.cryptocurrencyliveapplication.interfaces.OnCurrenciesListListener;
 import com.example.ahmed.cryptocurrencyliveapplication.model.Cryptocurrency;
 import com.example.ahmed.cryptocurrencyliveapplication.model.DataResponse;
 import com.example.ahmed.cryptocurrencyliveapplication.utilities.Constants;
+import com.example.ahmed.cryptocurrencyliveapplication.views.activities.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +36,7 @@ import java.util.List;
  * Use the {@link CryptocurrenciesListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CryptocurrenciesListFragment extends Fragment implements onCryptocurriencesResponse {
+public class CryptocurrenciesListFragment extends MyFragment implements OnCryptocurriencesResponse, OnCurrenciesListListener {
 
     private Context mContext;
     private RecyclerView mDoctorsList;
@@ -77,13 +81,14 @@ public class CryptocurrenciesListFragment extends Fragment implements onCryptocu
         return view;
     }
 
-    private void initView(View view){
+    @Override
+    public void initView(View view){
         mContext = this.getContext();
         mDoctorsList = (RecyclerView) view.findViewById(R.id.list);
         layoutManager = new LinearLayoutManager(mContext);
         mDoctorsList.setLayoutManager(layoutManager);
         items = new ArrayList<>();
-        mCryptocurrencyListAdapter = new CryptocurrencyListAdapter(items, TAG,getActivity());
+        mCryptocurrencyListAdapter = new CryptocurrencyListAdapter(items, TAG,getActivity(), this);
         mDoctorsList.setAdapter(mCryptocurrencyListAdapter);
         mDoctorsList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -97,12 +102,13 @@ public class CryptocurrenciesListFragment extends Fragment implements onCryptocu
         });
         mController=new CryptocurrenciesListController(TAG, mContext, this);
         mController.getCurriencies(0,10, Constants.SORT_VALUE,Constants.STRUCTURE_VALUE);
-//        DividerItemDecoration divider = new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL);
-//        divider.setDrawable(ContextCompat.getDrawable(mContext, R.drawable.account_list_divider));
-//        mDoctorsList.addItemDecoration(divider);
+        DividerItemDecoration divider = new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL);
+        divider.setDrawable(ContextCompat.getDrawable(mContext, R.drawable.list_divider));
+        mDoctorsList.addItemDecoration(divider);
     }
 
-    private void setToolBar(){
+    @Override
+    public void setToolBar(){
         Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.my_toolbar);
         TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
         mTitle.setText(R.string.cryptocurrency_title);
@@ -122,6 +128,11 @@ public class CryptocurrenciesListFragment extends Fragment implements onCryptocu
     }
 
     @Override
+    public void onItemClicked(Cryptocurrency cryptocurrency){
+        ((MainActivity)getActivity()).openCalculator(cryptocurrency);
+    }
+
+    @Override
     public void onSuccess(DataResponse dataResponse){
         List<Cryptocurrency> cryptocurrencies= mController.castResponse(dataResponse);
         for(int i=0;i<cryptocurrencies.size();i++)
@@ -132,6 +143,6 @@ public class CryptocurrenciesListFragment extends Fragment implements onCryptocu
 
     @Override
     public void onFailure(VolleyError error){
-
+        Toast.makeText(mContext,getResources().getText(R.string.check_connection),Toast.LENGTH_SHORT).show();
     }
 }

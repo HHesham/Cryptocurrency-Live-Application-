@@ -1,6 +1,9 @@
 package com.example.ahmed.cryptocurrencyliveapplication.model;
 
-public class Cryptocurrency {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Cryptocurrency implements Parcelable{
     /*
     "id": 258,
             "name": "Groestlcoin",
@@ -118,4 +121,48 @@ public class Cryptocurrency {
     public void setLast_updated(long last_updated) {
         this.last_updated = last_updated;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.id);
+        dest.writeString(this.name);
+        dest.writeString(this.symbol);
+        dest.writeString(this.website_slug);
+        dest.writeInt(this.rank);
+        dest.writeDouble(this.circulating_supply);
+        dest.writeDouble(this.total_supply);
+        dest.writeDouble(this.max_supply);
+        dest.writeParcelable(this.quotes, flags);
+        dest.writeLong(this.last_updated);
+    }
+
+    protected Cryptocurrency(Parcel in) {
+        this.id = in.readInt();
+        this.name = in.readString();
+        this.symbol = in.readString();
+        this.website_slug = in.readString();
+        this.rank = in.readInt();
+        this.circulating_supply = in.readDouble();
+        this.total_supply = in.readDouble();
+        this.max_supply = in.readDouble();
+        this.quotes = in.readParcelable(Quote.class.getClassLoader());
+        this.last_updated = in.readLong();
+    }
+
+    public static final Creator<Cryptocurrency> CREATOR = new Creator<Cryptocurrency>() {
+        @Override
+        public Cryptocurrency createFromParcel(Parcel source) {
+            return new Cryptocurrency(source);
+        }
+
+        @Override
+        public Cryptocurrency[] newArray(int size) {
+            return new Cryptocurrency[size];
+        }
+    };
 }
