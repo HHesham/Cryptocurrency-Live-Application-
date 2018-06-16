@@ -1,12 +1,16 @@
 package com.example.ahmed.cryptocurrencyliveapplication.managers;
 
 import android.content.Context;
+import android.widget.Toast;
+
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.example.ahmed.cryptocurrencyliveapplication.R;
 import com.example.ahmed.cryptocurrencyliveapplication.interfaces.OnCryptocurriencesResponse;
 import com.example.ahmed.cryptocurrencyliveapplication.model.DataResponse;
 import com.example.ahmed.cryptocurrencyliveapplication.utilities.Constants;
+import com.example.ahmed.cryptocurrencyliveapplication.utilities.Helper;
 
 import java.util.HashMap;
 import java.util.Map;

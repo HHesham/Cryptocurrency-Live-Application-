@@ -1,11 +1,15 @@
 package com.example.ahmed.cryptocurrencyliveapplication.controllers;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.widget.Toast;
 
+import com.example.ahmed.cryptocurrencyliveapplication.R;
 import com.example.ahmed.cryptocurrencyliveapplication.interfaces.OnCryptocurriencesResponse;
 import com.example.ahmed.cryptocurrencyliveapplication.managers.VolleyManager;
 import com.example.ahmed.cryptocurrencyliveapplication.model.Cryptocurrency;
 import com.example.ahmed.cryptocurrencyliveapplication.model.DataResponse;
+import com.example.ahmed.cryptocurrencyliveapplication.utilities.Helper;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -24,7 +28,12 @@ public class CryptocurrenciesListController {
         mListener=listener;
     }
 
-    public void getCurriencies(int start, int limit, String sort, String structure){
+    public void getCurriencies(int start, int limit, String sort, String structure, ProgressDialog dialog){
+        if(!Helper.isNetworkAvailable(mContext)){
+            Toast.makeText(mContext, mContext.getResources().getString(R.string.check_connection), Toast.LENGTH_SHORT).show();
+            return;
+        }
+        dialog.show();
         VolleyManager.getInstance().getCurrenciesList(start,limit, sort,structure, mContext,mTag,mListener);
     }
 

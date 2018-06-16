@@ -60,11 +60,13 @@ public class CryptocurrencyListAdapter extends RecyclerView.Adapter<Cryptocurren
         public final View mView;
         public Cryptocurrency mItem;
         public TextView mCurrencyText;
+        public ImageView mCheckImage;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
             mCurrencyText=(TextView)view.findViewById(R.id.currency_text);
+            mCheckImage=(ImageView)view.findViewById(R.id.selection_box);
         }
 
         @Override

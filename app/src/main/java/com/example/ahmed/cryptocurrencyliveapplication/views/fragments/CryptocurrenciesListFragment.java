@@ -1,5 +1,6 @@
 package com.example.ahmed.cryptocurrencyliveapplication.views.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -24,6 +25,7 @@ import com.example.ahmed.cryptocurrencyliveapplication.interfaces.OnCurrenciesLi
 import com.example.ahmed.cryptocurrencyliveapplication.model.Cryptocurrency;
 import com.example.ahmed.cryptocurrencyliveapplication.model.DataResponse;
 import com.example.ahmed.cryptocurrencyliveapplication.utilities.Constants;
+import com.example.ahmed.cryptocurrencyliveapplication.utilities.Helper;
 import com.example.ahmed.cryptocurrencyliveapplication.views.activities.MainActivity;
 
 import java.util.ArrayList;
@@ -47,7 +49,10 @@ public class CryptocurrenciesListFragment extends MyFragment implements OnCrypto
     private boolean isLastPage = false;
     private int mPage=-1;
     private CryptocurrenciesListController mController;
-    public static final String TAG = CryptocurrenciesListFragment.class.getSimpleName();
+    private static final String TAG = CryptocurrenciesListFragment.class.getSimpleName();
+    private int start = 0;
+    private ProgressDialog mDialog;
+    private boolean isSelectionMode = false;
 
     public CryptocurrenciesListFragment() {
     }
@@ -84,6 +89,7 @@ public class CryptocurrenciesListFragment extends MyFragment implements OnCrypto
     @Override
     public void initView(View view){
         mContext = this.getContext();
+        mDialog= Helper.getProgressDialog(mContext);
         mDoctorsList = (RecyclerView) view.findViewById(R.id.list);
         layoutManager = new LinearLayoutManager(mContext);
         mDoctorsList.setLayoutManager(layoutManager);
@@ -98,10 +104,25 @@ public class CryptocurrenciesListFragment extends MyFragment implements OnCrypto
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+                if(dy>0){
+                    int visibleItemCount = layoutManager.getChildCount();
+                    int totalItemCount = layoutManager.getItemCount();
+                    int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
+                    int pageNumber = totalItemCount/Constants.PAGE_SIZE;
+                    if (!isLoading){
+                        if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
+                                && firstVisibleItemPosition >= 0
+                                && totalItemCount >= Constants.PAGE_SIZE * (pageNumber)) {
+                            isLoading = true;
+                            mController.getCurriencies(totalItemCount+1, Constants.PAGE_SIZE,Constants.SORT_VALUE,
+                                    Constants.STRUCTURE_VALUE, mDialog);
+                        }
+                    }
+                }
             }
         });
         mController=new CryptocurrenciesListController(TAG, mContext, this);
-        mController.getCurriencies(0,10, Constants.SORT_VALUE,Constants.STRUCTURE_VALUE);
+        mController.getCurriencies(start, Constants.PAGE_SIZE, Constants.SORT_VALUE,Constants.STRUCTURE_VALUE, mDialog);
         DividerItemDecoration divider = new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL);
         divider.setDrawable(ContextCompat.getDrawable(mContext, R.drawable.list_divider));
         mDoctorsList.addItemDecoration(divider);
@@ -129,11 +150,17 @@ public class CryptocurrenciesListFragment extends MyFragment implements OnCrypto
 
     @Override
     public void onItemClicked(Cryptocurrency cryptocurrency){
-        ((MainActivity)getActivity()).openCalculator(cryptocurrency);
+        if(isSelectionMode){
+
+        }else {
+            ((MainActivity) getActivity()).openCalculator(cryptocurrency);
+        }
     }
 
     @Override
     public void onSuccess(DataResponse dataResponse){
+        isLoading = false;
+        mDialog.dismiss();
         List<Cryptocurrency> cryptocurrencies= mController.castResponse(dataResponse);
         for(int i=0;i<cryptocurrencies.size();i++)
             items.add(cryptocurrencies.get(i));
@@ -143,6 +170,8 @@ public class CryptocurrenciesListFragment extends MyFragment implements OnCrypto
 
     @Override
     public void onFailure(VolleyError error){
+        isLoading = false;
+        mDialog.dismiss();
         Toast.makeText(mContext,getResources().getText(R.string.check_connection),Toast.LENGTH_SHORT).show();
     }
 }

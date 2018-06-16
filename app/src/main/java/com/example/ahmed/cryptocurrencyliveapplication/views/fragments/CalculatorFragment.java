@@ -9,11 +9,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.ahmed.cryptocurrencyliveapplication.R;
 import com.example.ahmed.cryptocurrencyliveapplication.model.Cryptocurrency;
+import com.example.ahmed.cryptocurrencyliveapplication.utilities.Helper;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,7 +24,9 @@ import com.example.ahmed.cryptocurrencyliveapplication.model.Cryptocurrency;
  * Use the {@link CalculatorFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CalculatorFragment extends MyFragment {
+public class CalculatorFragment extends MyFragment implements View.OnClickListener{
+
+    //TODO add service to update value each 5 mins
 
     private Context mContext;
     private TextView mToCurrencyVal;
@@ -32,6 +36,8 @@ public class CalculatorFragment extends MyFragment {
     private EditText mToCurrEditText;
     private EditText mToUSDEditText;
     private TextView mConvertToCurrency;
+    private Button mToUSDBtn;
+    private Button mToCurrencyBtn;
     private Cryptocurrency mCryptoCurrency;
     private static final String CRYPTOCURRENCY_KEY="cryptocurrency_key";
 
@@ -81,14 +87,42 @@ public class CalculatorFragment extends MyFragment {
         mConvertToCurrency= (TextView)view.findViewById(R.id.to_currency_title);
         mToCurrEditText= (EditText) view.findViewById(R.id.to_currency_edit_text);
         mToUSDEditText= (EditText) view.findViewById(R.id.to_usd_edit_text);
+        mToCurrencyBtn = (Button) view.findViewById(R.id.to_currency_convert_btn);
+        mToUSDBtn = (Button) view.findViewById(R.id.to_usd_convert_btn);
+        mToCurrencyBtn.setOnClickListener(this);
+        mToUSDBtn.setOnClickListener(this);
+    }
+
+    private void updateValue(TextView view, double val){
+        view.setText(Helper.formateDouble(val));
+    }
+
+    @Override
+    public void onClick(View view){
+        double val;
+        switch (view.getId()){
+            case R.id.to_currency_convert_btn:
+                val = Double.parseDouble(mToCurrEditText.getText().toString()) / mCryptoCurrency.getQuotes().getUSD().getPrice();
+                updateValue(mToCurrencyVal,val);
+                break;
+            case R.id.to_usd_convert_btn:
+                val = 1.0 *  mCryptoCurrency.getQuotes().getUSD().getPrice() * Double.parseDouble(mToUSDEditText.getText().toString());
+                updateValue(mToUSDVal,val);
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
     public void fillFields(){
-        String title = getResources().getText(R.string.to_currency)+mCryptoCurrency.getName();
+        String title = getResources().getText(R.string.to_currency)+" "+mCryptoCurrency.getName();
         mConvertToCurrency.setText(title);
         mToCurrencyText.setText(mCryptoCurrency.getName());
         mToUSDText.setText(mCryptoCurrency.getName());
+        double usdToCurrency =1.0/mCryptoCurrency.getQuotes().getUSD().getPrice();
+        updateValue(mToUSDVal, mCryptoCurrency.getQuotes().getUSD().getPrice());
+        updateValue(mToCurrencyVal, usdToCurrency);
     }
 
     @Override
