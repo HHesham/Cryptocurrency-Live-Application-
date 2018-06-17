@@ -79,6 +79,16 @@ public class CryptocurrencyListAdapter extends RecyclerView.Adapter<Cryptocurren
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.mItem = mValues.get(position);
         holder.mCurrencyText.setText(mValues.get(position).getName());
+        String priceStr = mActivity.getResources().getString(R.string.price)+": "+mValues.get(position).getQuotes().getUSD().getPrice()
+                + " "+mActivity.getResources().getString(R.string.usd);
+        String marketStr = mActivity.getResources().getString(R.string.market)+": "+mValues.get(position).getQuotes().getUSD().getMarket_cap()
+                + " "+mActivity.getResources().getString(R.string.usd);
+        String volumeStr = mActivity.getResources().getString(R.string.volume)+": "+mValues.get(position).getQuotes().getUSD().getVolume_24h()
+                + " "+mActivity.getResources().getString(R.string.usd);
+        holder.mPriceText.setText(priceStr);
+        holder.mMarketCapText.setText(marketStr);
+        holder.mVolumText.setText(volumeStr);
+
         if(isSelectionMode){
             holder.mCheckImage.setVisibility(View.VISIBLE);
         }else {
@@ -120,11 +130,18 @@ public class CryptocurrencyListAdapter extends RecyclerView.Adapter<Cryptocurren
         public final View mView;
         public Cryptocurrency mItem;
         public TextView mCurrencyText;
+        public TextView mPriceText;
+        public TextView mVolumText;
+        public TextView mMarketCapText;
+
         public ImageView mCheckImage;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
+            mPriceText=(TextView)view.findViewById(R.id.price_text);
+            mVolumText=(TextView)view.findViewById(R.id.volume_24h_text);
+            mMarketCapText=(TextView)view.findViewById(R.id.market_cap_text);
             mCurrencyText=(TextView)view.findViewById(R.id.currency_text);
             mCheckImage=(ImageView)view.findViewById(R.id.selection_box);
         }

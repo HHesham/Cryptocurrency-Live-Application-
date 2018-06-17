@@ -7,10 +7,12 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.ahmed.cryptocurrencyliveapplication.R;
@@ -38,6 +40,7 @@ public class CalculatorFragment extends MyFragment implements View.OnClickListen
     private TextView mConvertToCurrency;
     private Button mToUSDBtn;
     private Button mToCurrencyBtn;
+    private LinearLayout mLayout;
     private Cryptocurrency mCryptoCurrency;
     private static final String CRYPTOCURRENCY_KEY="cryptocurrency_key";
 
@@ -80,6 +83,7 @@ public class CalculatorFragment extends MyFragment implements View.OnClickListen
     @Override
     public void initView(View view){
         mContext = this.getContext();
+        mLayout = (LinearLayout) view.findViewById(R.id.layout);
         mToCurrencyVal = (TextView) view.findViewById(R.id.to_currency_value);
         mToCurrencyText= (TextView)view.findViewById(R.id.to_currency_text);
         mToUSDVal= (TextView)view.findViewById(R.id.to_usd_value);
@@ -91,6 +95,12 @@ public class CalculatorFragment extends MyFragment implements View.OnClickListen
         mToUSDBtn = (Button) view.findViewById(R.id.to_usd_convert_btn);
         mToCurrencyBtn.setOnClickListener(this);
         mToUSDBtn.setOnClickListener(this);
+        mLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Helper.hideKeyboard(getActivity());
+            }
+        });
     }
 
     private void updateValue(TextView view, double val){

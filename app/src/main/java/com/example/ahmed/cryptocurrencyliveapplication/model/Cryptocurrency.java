@@ -3,7 +3,7 @@ package com.example.ahmed.cryptocurrencyliveapplication.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Cryptocurrency implements Parcelable{
+public class Cryptocurrency implements Parcelable, Comparable<Cryptocurrency>{
     /*
     "id": 258,
             "name": "Groestlcoin",
@@ -165,4 +165,9 @@ public class Cryptocurrency implements Parcelable{
             return new Cryptocurrency[size];
         }
     };
+
+    @Override
+    public int compareTo(Cryptocurrency other) {
+        return this.id>other.id?1:-1;
+    }
 }

@@ -48,12 +48,12 @@ public class CryptocurrenciesListFragment extends MyFragment implements OnCrypto
     private LinearLayoutManager layoutManager;
     private CryptocurrencyListAdapter mCryptocurrencyListAdapter;
     private boolean isLoading = false;
-    private boolean isLastPage = false;
-    private int mPage=-1;
     private CryptocurrenciesListController mController;
     private static final String TAG = CryptocurrenciesListFragment.class.getSimpleName();
     private int start = 0;
     private ProgressDialog mDialog;
+    private static final String FRAGMENT_KEY = "fragment";
+    private Fragment mContent;
 
     public CryptocurrencyListAdapter getAdapter(){
         return mCryptocurrencyListAdapter;
@@ -77,7 +77,9 @@ public class CryptocurrenciesListFragment extends MyFragment implements OnCrypto
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        if (savedInstanceState != null) {
+//            mContent = getActivity().getSupportFragmentManager().getFragment(savedInstanceState, FRAGMENT_KEY);
+            //Restore the fragment's state here
         }
     }
 
@@ -145,6 +147,7 @@ public class CryptocurrenciesListFragment extends MyFragment implements OnCrypto
         android.support.v7.app.ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayHomeAsUpEnabled(visiableBack);
+        ((MainActivity)getActivity()).setChartVisibilty(visiableBack);
     }
 
     @Override
@@ -179,4 +182,11 @@ public class CryptocurrenciesListFragment extends MyFragment implements OnCrypto
         mDialog.dismiss();
         Toast.makeText(mContext,getResources().getText(R.string.check_connection),Toast.LENGTH_SHORT).show();
     }
+
+//    @Override
+//    public void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+//        //Save the fragment's state here
+//        getActivity().getSupportFragmentManager().putFragment(outState, FRAGMENT_KEY, mContent);
+//    }
 }
