@@ -155,4 +155,9 @@ public class CalculatorFragment extends MyFragment implements View.OnClickListen
     public void onDetach() {
         super.onDetach();
     }
+
+    @Override
+    public void refreshData(){
+
+    }
 }

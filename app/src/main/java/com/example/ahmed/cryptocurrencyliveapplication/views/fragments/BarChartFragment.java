@@ -145,10 +145,6 @@ public class BarChartFragment extends MyFragment {
         } else {
             set = new BarDataSet(yVals1, "");
             set.setDrawIcons(false);
-//            set1.setColors(ColorTemplate.MATERIAL_COLORS);
-            /*int startColor = ContextCompat.getColor(this, android.R.color.holo_blue_dark);
-            int endColor = ContextCompat.getColor(this, android.R.color.holo_blue_bright);
-            set1.setGradientColor(startColor, endColor);*/
 
             int startColor1 = ContextCompat.getColor(mContext, android.R.color.holo_orange_light);
             int startColor2 = ContextCompat.getColor(mContext, android.R.color.holo_blue_light);
@@ -184,5 +180,11 @@ public class BarChartFragment extends MyFragment {
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+
+    @Override
+    public void refreshData(){
+
     }
 }

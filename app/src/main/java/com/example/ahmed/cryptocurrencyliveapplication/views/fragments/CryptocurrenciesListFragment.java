@@ -78,7 +78,6 @@ public class CryptocurrenciesListFragment extends MyFragment implements OnCrypto
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
-//            mContent = getActivity().getSupportFragmentManager().getFragment(savedInstanceState, FRAGMENT_KEY);
             //Restore the fragment's state here
         }
     }
@@ -183,10 +182,11 @@ public class CryptocurrenciesListFragment extends MyFragment implements OnCrypto
         Toast.makeText(mContext,getResources().getText(R.string.check_connection),Toast.LENGTH_SHORT).show();
     }
 
-//    @Override
-//    public void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
-//        //Save the fragment's state here
-//        getActivity().getSupportFragmentManager().putFragment(outState, FRAGMENT_KEY, mContent);
-//    }
+
+    @Override
+    public void refreshData(){
+        isLoading = true;
+        mController.getCurriencies(0,items.size(),Constants.SORT_VALUE,
+                Constants.STRUCTURE_VALUE, mDialog);
+    }
 }

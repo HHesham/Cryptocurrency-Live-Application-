@@ -16,4 +16,8 @@ public class MyFragment extends Fragment{
     public void setToolBar(){
 
     }
+
+    public void refreshData(){
+
+    }
 }

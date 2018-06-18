@@ -7,4 +7,6 @@ public class Constants {
     public static final String STRUCTURE_VALUE = "array";
     public static final int PAGE_SIZE = 5;
     public static final int MAX_BARS = 60;
+    public static final int REFRESH_MINS= 5;
+
 }
