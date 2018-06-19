@@ -5,6 +5,8 @@ Cryptocurrency Live App is a simple Mobile application, so that you can fetch th
   - Fetch the exchange rates for all cryptocurrencies in USD with Paging.
   - Simple calculator that converts between cryptocurrency and USD.
   - Dynamic BarChart between Cryptocurrencies.
+  - Refresh cryptocurrencies list every 5 mins.
+
 #  Steps
  - The first screen is the cryptocurrencies list where user can find all cryptocurrencies (The list support paging).
 
