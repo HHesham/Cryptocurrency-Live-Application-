@@ -40,7 +40,7 @@ public class VolleyManagerTest {
         VolleyManager.getInstance().getCurrenciesList(start, limit, Constants.SORT_VALUE, Constants.STRUCTURE_VALUE,
                 context, "", new OnCryptocurriencesResponse() {
                     @Override
-                    public void onSuccess(DataResponse dataResponse) {
+                    public void onSuccess(DataResponse dataResponse,boolean isPeriodically) {
                         try {
                             Gson gs = new Gson();
                             String js = gs.toJson(dataResponse.getData());
@@ -58,7 +58,7 @@ public class VolleyManagerTest {
                         signal.countDown();// notify the count down latch
 
                     }
-                });
+                },false);
         signal.await();// wait for callback
         Assert.assertEquals(test[0], Constants.PAGE_SIZE);
     }
@@ -73,7 +73,7 @@ public class VolleyManagerTest {
         VolleyManager.getInstance().getCurrenciesList(start, limit, Constants.SORT_VALUE, Constants.STRUCTURE_VALUE,
                 context, "", new OnCryptocurriencesResponse() {
                     @Override
-                    public void onSuccess(DataResponse dataResponse) {
+                    public void onSuccess(DataResponse dataResponse,boolean isPeriodically) {
                         try {
                             Gson gs = new Gson();
                             String js = gs.toJson(dataResponse.getData());
@@ -91,7 +91,7 @@ public class VolleyManagerTest {
                         signal.countDown();// notify the count down latch
 
                     }
-                });
+                },false);
         signal.await();// wait for callback
         Assert.assertEquals(test[0], Constants.PAGE_SIZE+10);
     }
@@ -106,7 +106,7 @@ public class VolleyManagerTest {
         VolleyManager.getInstance().getCurrenciesList(-1, -1, "", Constants.STRUCTURE_VALUE,
                 context, "", new OnCryptocurriencesResponse() {
                     @Override
-                    public void onSuccess(DataResponse dataResponse) {
+                    public void onSuccess(DataResponse dataResponse, boolean isPeriodically) {
                         try {
                             Gson gs = new Gson();
                             String js = gs.toJson(dataResponse.getData());
@@ -124,7 +124,7 @@ public class VolleyManagerTest {
                         signal.countDown();// notify the count down latch
 
                     }
-                });
+                },false);
         signal.await();// wait for callback
         Assert.assertEquals(test[0], 100);
     }
