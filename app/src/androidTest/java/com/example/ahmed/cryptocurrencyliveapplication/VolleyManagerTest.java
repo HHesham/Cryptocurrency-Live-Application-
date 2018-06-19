@@ -9,8 +9,8 @@ import android.support.test.runner.AndroidJUnit4;
 import com.android.volley.VolleyError;
 import com.example.ahmed.cryptocurrencyliveapplication.interfaces.OnCryptocurriencesResponse;
 import com.example.ahmed.cryptocurrencyliveapplication.managers.VolleyManager;
-import com.example.ahmed.cryptocurrencyliveapplication.model.data.Cryptocurrency;
-import com.example.ahmed.cryptocurrencyliveapplication.model.responces.DataResponse;
+import com.example.ahmed.cryptocurrencyliveapplication.model.Cryptocurrency;
+import com.example.ahmed.cryptocurrencyliveapplication.model.DataResponse;
 import com.example.ahmed.cryptocurrencyliveapplication.utilities.Constants;
 import com.google.gson.Gson;
 

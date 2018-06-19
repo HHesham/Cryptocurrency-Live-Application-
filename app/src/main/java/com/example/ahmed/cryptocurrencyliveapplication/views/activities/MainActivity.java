@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.example.ahmed.cryptocurrencyliveapplication.R;
 import com.example.ahmed.cryptocurrencyliveapplication.interfaces.InterfaceCryptocurrenciesList;
-import com.example.ahmed.cryptocurrencyliveapplication.model.data.Cryptocurrency;
+import com.example.ahmed.cryptocurrencyliveapplication.model.Cryptocurrency;
 import com.example.ahmed.cryptocurrencyliveapplication.utilities.Constants;
 import com.example.ahmed.cryptocurrencyliveapplication.utilities.Helper;
 import com.example.ahmed.cryptocurrencyliveapplication.views.fragments.BarChartFragment;

@@ -1,4 +1,4 @@
-package com.example.ahmed.cryptocurrencyliveapplication.model.data;
+package com.example.ahmed.cryptocurrencyliveapplication.model;
 
 public class MetaData {
     private long timestamp;

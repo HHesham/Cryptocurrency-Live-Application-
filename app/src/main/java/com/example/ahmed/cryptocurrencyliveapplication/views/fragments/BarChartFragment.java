@@ -12,7 +12,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.example.ahmed.cryptocurrencyliveapplication.R;
-import com.example.ahmed.cryptocurrencyliveapplication.model.data.Cryptocurrency;
+import com.example.ahmed.cryptocurrencyliveapplication.model.Cryptocurrency;
 import com.example.ahmed.cryptocurrencyliveapplication.utilities.Constants;
 import com.example.ahmed.cryptocurrencyliveapplication.utilities.IntValueFormatter;
 import com.example.ahmed.cryptocurrencyliveapplication.utilities.LabelFormatter;

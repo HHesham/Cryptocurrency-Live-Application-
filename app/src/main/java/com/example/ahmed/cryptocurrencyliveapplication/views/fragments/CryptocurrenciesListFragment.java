@@ -22,8 +22,8 @@ import com.example.ahmed.cryptocurrencyliveapplication.adapters.CryptocurrencyLi
 import com.example.ahmed.cryptocurrencyliveapplication.controllers.CryptocurrenciesListController;
 import com.example.ahmed.cryptocurrencyliveapplication.interfaces.OnCryptocurriencesResponse;
 import com.example.ahmed.cryptocurrencyliveapplication.interfaces.OnCurrenciesListListener;
-import com.example.ahmed.cryptocurrencyliveapplication.model.data.Cryptocurrency;
-import com.example.ahmed.cryptocurrencyliveapplication.model.responces.DataResponse;
+import com.example.ahmed.cryptocurrencyliveapplication.model.Cryptocurrency;
+import com.example.ahmed.cryptocurrencyliveapplication.model.DataResponse;
 import com.example.ahmed.cryptocurrencyliveapplication.utilities.Constants;
 import com.example.ahmed.cryptocurrencyliveapplication.utilities.Helper;
 import com.example.ahmed.cryptocurrencyliveapplication.views.activities.MainActivity;

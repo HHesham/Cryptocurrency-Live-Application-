@@ -7,8 +7,8 @@ import android.widget.Toast;
 import com.example.ahmed.cryptocurrencyliveapplication.R;
 import com.example.ahmed.cryptocurrencyliveapplication.interfaces.OnCryptocurriencesResponse;
 import com.example.ahmed.cryptocurrencyliveapplication.managers.VolleyManager;
-import com.example.ahmed.cryptocurrencyliveapplication.model.data.Cryptocurrency;
-import com.example.ahmed.cryptocurrencyliveapplication.model.responces.DataResponse;
+import com.example.ahmed.cryptocurrencyliveapplication.model.Cryptocurrency;
+import com.example.ahmed.cryptocurrencyliveapplication.model.DataResponse;
 import com.example.ahmed.cryptocurrencyliveapplication.utilities.Helper;
 import com.google.gson.Gson;
 

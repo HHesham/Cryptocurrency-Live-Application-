@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.example.ahmed.cryptocurrencyliveapplication.R;
 import com.example.ahmed.cryptocurrencyliveapplication.interfaces.OnCurrenciesListListener;
-import com.example.ahmed.cryptocurrencyliveapplication.model.data.Cryptocurrency;
+import com.example.ahmed.cryptocurrencyliveapplication.model.Cryptocurrency;
 
 import java.util.Hashtable;
 import java.util.List;

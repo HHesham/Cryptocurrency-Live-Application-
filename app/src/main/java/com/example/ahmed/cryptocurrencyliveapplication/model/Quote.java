@@ -1,4 +1,4 @@
-package com.example.ahmed.cryptocurrencyliveapplication.model.data;
+package com.example.ahmed.cryptocurrencyliveapplication.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
