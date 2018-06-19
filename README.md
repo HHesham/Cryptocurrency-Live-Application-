@@ -6,9 +6,8 @@ Cryptocurrency Live App is a simple Mobile application, so that you can fetch th
   - Simple calculator that converts between cryptocurrency and USD.
   - Dynamic BarChart between Cryptocurrencies.
 #  Steps
-  - The first screen is the cryptocurrencies list where user can find all cryptocurrencies (The list support paging).
-![alt text](https://raw.githubusercontent.com/HHesham/Cryptocurrency-Live-Applicati
-on-/master/Screenshot_2018-06-19-01-32-38.png "")
+ - The first screen is the cryptocurrencies list where user can find all cryptocurrencies (The list support paging).
+![alt text](https://raw.githubusercontent.com/HHesham/Cryptocurrency-Live-Application-/master/Screenshot_2018-06-19-01-32-38.png "")
 
   - Now user can select more than one cryptocurrencies by long press any currency and then open bar chart by pressing on the menu item.
 ![alt text](https://raw.githubusercontent.com/HHesham/Cryptocurrency-Live-Application-/master/Screenshot_2018-06-19-01-32-45.png "")
@@ -17,8 +16,7 @@ on-/master/Screenshot_2018-06-19-01-32-38.png "")
 ![alt text](https://raw.githubusercontent.com/HHesham/Cryptocurrency-Live-Application-/master/Screenshot_2018-06-19-01-33-29.png "")
 
 - User can open simple calculator to convert between cryptocurrency and USD.
-![alt text(https://raw.githubusercontent.com/HHesham/Cryptocurrency-Live-Application-/master/Screenshot_2018-06-19-01-35-05.png "")
-
+![alt text](https://raw.githubusercontent.com/HHesham/Cryptocurrency-Live-Application-/master/Screenshot_2018-06-19-01-35-05.png "")
 # Tech
 * [MPAndroidChart] - For dynamic bar chart.
 * [Volley] - to handle api calles.
