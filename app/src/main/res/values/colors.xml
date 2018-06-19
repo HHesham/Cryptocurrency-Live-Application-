@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="separator_color">#979797</color>
+    <color name="convert_bg">#688d2e</color>
+
+    <color name="edit_text_border">#c6c6c6</color>
+    <color name="edit_text_color">#fbfaff</color>
+    <color name="text_color">#000000</color>
+
+</resources>
