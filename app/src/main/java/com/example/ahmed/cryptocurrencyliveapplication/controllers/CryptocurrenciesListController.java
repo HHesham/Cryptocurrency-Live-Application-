@@ -7,8 +7,8 @@ import android.widget.Toast;
 import com.example.ahmed.cryptocurrencyliveapplication.R;
 import com.example.ahmed.cryptocurrencyliveapplication.interfaces.OnCryptocurriencesResponse;
 import com.example.ahmed.cryptocurrencyliveapplication.managers.VolleyManager;
-import com.example.ahmed.cryptocurrencyliveapplication.model.Cryptocurrency;
-import com.example.ahmed.cryptocurrencyliveapplication.model.DataResponse;
+import com.example.ahmed.cryptocurrencyliveapplication.model.data.Cryptocurrency;
+import com.example.ahmed.cryptocurrencyliveapplication.model.responces.DataResponse;
 import com.example.ahmed.cryptocurrencyliveapplication.utilities.Helper;
 import com.google.gson.Gson;
 
@@ -28,13 +28,13 @@ public class CryptocurrenciesListController {
         mListener=listener;
     }
 
-    public void getCurriencies(int start, int limit, String sort, String structure, ProgressDialog dialog){
+    public void getCurriencies(int start, int limit, String sort, String structure, ProgressDialog dialog, boolean isPeriodicalRefresh){
         if(!Helper.isNetworkAvailable(mContext)){
             Toast.makeText(mContext, mContext.getResources().getString(R.string.check_connection), Toast.LENGTH_SHORT).show();
             return;
         }
         dialog.show();
-        VolleyManager.getInstance().getCurrenciesList(start,limit, sort,structure, mContext,mTag,mListener);
+        VolleyManager.getInstance().getCurrenciesList(start,limit, sort,structure, mContext,mTag,mListener, isPeriodicalRefresh);
     }
 
     public List<Cryptocurrency> castResponse(DataResponse response){

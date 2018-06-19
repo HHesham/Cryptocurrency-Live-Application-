@@ -13,7 +13,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,14 +22,13 @@ import com.example.ahmed.cryptocurrencyliveapplication.adapters.CryptocurrencyLi
 import com.example.ahmed.cryptocurrencyliveapplication.controllers.CryptocurrenciesListController;
 import com.example.ahmed.cryptocurrencyliveapplication.interfaces.OnCryptocurriencesResponse;
 import com.example.ahmed.cryptocurrencyliveapplication.interfaces.OnCurrenciesListListener;
-import com.example.ahmed.cryptocurrencyliveapplication.model.Cryptocurrency;
-import com.example.ahmed.cryptocurrencyliveapplication.model.DataResponse;
+import com.example.ahmed.cryptocurrencyliveapplication.model.data.Cryptocurrency;
+import com.example.ahmed.cryptocurrencyliveapplication.model.responces.DataResponse;
 import com.example.ahmed.cryptocurrencyliveapplication.utilities.Constants;
 import com.example.ahmed.cryptocurrencyliveapplication.utilities.Helper;
 import com.example.ahmed.cryptocurrencyliveapplication.views.activities.MainActivity;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.List;
 
 /**
@@ -121,14 +119,14 @@ public class CryptocurrenciesListFragment extends MyFragment implements OnCrypto
                                 && totalItemCount >= Constants.PAGE_SIZE * (pageNumber)) {
                             isLoading = true;
                             mController.getCurriencies(totalItemCount+1, Constants.PAGE_SIZE,Constants.SORT_VALUE,
-                                    Constants.STRUCTURE_VALUE, mDialog);
+                                    Constants.STRUCTURE_VALUE, mDialog, false);
                         }
                     }
                 }
             }
         });
         mController=new CryptocurrenciesListController(TAG, mContext, this);
-        mController.getCurriencies(start, Constants.PAGE_SIZE, Constants.SORT_VALUE,Constants.STRUCTURE_VALUE, mDialog);
+        mController.getCurriencies(start, Constants.PAGE_SIZE, Constants.SORT_VALUE,Constants.STRUCTURE_VALUE, mDialog,false);
         DividerItemDecoration divider = new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL);
         divider.setDrawable(ContextCompat.getDrawable(mContext, R.drawable.list_divider));
         mDoctorsList.addItemDecoration(divider);
@@ -165,9 +163,11 @@ public class CryptocurrenciesListFragment extends MyFragment implements OnCrypto
     }
 
     @Override
-    public void onSuccess(DataResponse dataResponse){
+    public void onSuccess(DataResponse dataResponse, boolean isPeriodicalRefresh){
         isLoading = false;
         mDialog.dismiss();
+        if(isPeriodicalRefresh)
+            items.clear();
         List<Cryptocurrency> cryptocurrencies= mController.castResponse(dataResponse);
         for(int i=0;i<cryptocurrencies.size();i++)
             items.add(cryptocurrencies.get(i));
@@ -187,6 +187,6 @@ public class CryptocurrenciesListFragment extends MyFragment implements OnCrypto
     public void refreshData(){
         isLoading = true;
         mController.getCurriencies(0,items.size(),Constants.SORT_VALUE,
-                Constants.STRUCTURE_VALUE, mDialog);
+                Constants.STRUCTURE_VALUE, mDialog, true);
     }
 }

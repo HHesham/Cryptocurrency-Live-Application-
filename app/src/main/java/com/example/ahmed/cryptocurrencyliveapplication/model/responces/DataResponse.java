@@ -1,4 +1,6 @@
-package com.example.ahmed.cryptocurrencyliveapplication.model;
+package com.example.ahmed.cryptocurrencyliveapplication.model.responces;
+
+import com.example.ahmed.cryptocurrencyliveapplication.model.data.MetaData;
 
 public class DataResponse {
     private Object data;

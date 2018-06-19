@@ -1,22 +1,21 @@
 package com.example.ahmed.cryptocurrencyliveapplication.views.fragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ahmed.cryptocurrencyliveapplication.R;
-import com.example.ahmed.cryptocurrencyliveapplication.model.Cryptocurrency;
+import com.example.ahmed.cryptocurrencyliveapplication.model.data.Cryptocurrency;
 import com.example.ahmed.cryptocurrencyliveapplication.utilities.Helper;
 
 /**
@@ -112,12 +111,22 @@ public class CalculatorFragment extends MyFragment implements View.OnClickListen
         double val;
         switch (view.getId()){
             case R.id.to_currency_convert_btn:
-                val = Double.parseDouble(mToCurrEditText.getText().toString()) / mCryptoCurrency.getQuotes().getUSD().getPrice();
-                updateValue(mToCurrencyVal,val);
+                Helper.hideKeyboard(getActivity());
+                if(mToCurrEditText.getText()==null || mToCurrEditText.getText().toString().isEmpty()){
+                    Toast.makeText(mContext, getResources().getText(R.string.enter_amount_first), Toast.LENGTH_SHORT).show();
+                }else {
+                    val = Double.parseDouble(mToCurrEditText.getText().toString()) / mCryptoCurrency.getQuotes().getUSD().getPrice();
+                    updateValue(mToCurrencyVal, val);
+                }
                 break;
             case R.id.to_usd_convert_btn:
-                val = 1.0 *  mCryptoCurrency.getQuotes().getUSD().getPrice() * Double.parseDouble(mToUSDEditText.getText().toString());
-                updateValue(mToUSDVal,val);
+                Helper.hideKeyboard(getActivity());
+                if(mToUSDEditText.getText()==null || mToUSDEditText.getText().toString().isEmpty()){
+                    Toast.makeText(mContext, getResources().getText(R.string.enter_amount_first), Toast.LENGTH_SHORT).show();
+                }else {
+                    val = 1.0 * mCryptoCurrency.getQuotes().getUSD().getPrice() * Double.parseDouble(mToUSDEditText.getText().toString());
+                    updateValue(mToUSDVal, val);
+                }
                 break;
             default:
                 break;
@@ -158,6 +167,6 @@ public class CalculatorFragment extends MyFragment implements View.OnClickListen
 
     @Override
     public void refreshData(){
-
+        //if we want to refresh data in the calculator
     }
 }

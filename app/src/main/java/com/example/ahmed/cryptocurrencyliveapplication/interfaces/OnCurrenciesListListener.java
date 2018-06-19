@@ -1,8 +1,6 @@
 package com.example.ahmed.cryptocurrencyliveapplication.interfaces;
 
-import android.view.View;
-
-import com.example.ahmed.cryptocurrencyliveapplication.model.Cryptocurrency;
+import com.example.ahmed.cryptocurrencyliveapplication.model.data.Cryptocurrency;
 
 public interface OnCurrenciesListListener {
 
